@@ -2,19 +2,16 @@
 import Image from "next/image";
 import { google } from "googleapis";
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
     const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
     const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
     const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
     const range = "Sheet1"; // Fetch the entire sheet data
-    const [currentUrl, setCurrentUrl] = useState<string>("");
-    const [parameter, setParameter] = useState<string>();
+    const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url search paramter "id"
 
     useEffect(() => {
-        // splitting url to find unique id
-        setCurrentUrl(window.location.href);
-        setParameter(currentUrl.split("?")[1]);
         // retrieving sheets and storing into data
         const fetchData = async () => {
             try {
@@ -85,9 +82,12 @@ export default function Home() {
                     <p>No data found.</p>
                 )}
                 <div className="my-2">
-                    {parameter !== undefined && parameter !== ""
+                    start of parameter |{parameter}| end of parameter
+                </div>
+                <div className="my-2">
+                    {parameter !== undefined && parameter !== null
                         ? parameter
-                        : currentUrl}
+                        : "No unique ID given"}
                 </div>
             </main>
         </div>
