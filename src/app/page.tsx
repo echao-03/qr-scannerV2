@@ -1,18 +1,19 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+const NO_USER: string = "XXXXXXXXXX";
 
 export default function Home() {
     const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
     const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
     const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
-    const [currentUrl, setCurrentUrl] = useState<string>("");
-    const [parameter, setParameter] = useState<string>();
+    const range = "Sheet1"; // Fetch the entire sheet data
+    let attendee: string = NO_USER; // set attendee to a default NO_USER string
+
+    const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url search paramter "id"
 
     useEffect(() => {
-        // splitting url to find unique id
-        setCurrentUrl(window.location.href);
-        setParameter(currentUrl.split("?")[1]);
         // retrieving sheets and storing into data
         const fetchData = async () => {
             try {
@@ -38,6 +39,15 @@ export default function Home() {
 
         fetchData();
     }, []);
+
+    // parse through ids in google sheets data to look for a corresponding id parameter
+    if (sheetData !== null) {
+        for (let i = 0; i < sheetData.length; i++) {
+            if (parameter == sheetData[i][3]) {
+                attendee = sheetData[i][0];
+            }
+        }
+    }
 
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -87,10 +97,11 @@ export default function Home() {
                 ) : (
                     <p>No data found.</p>
                 )}
+                <div className="my-2">{"the parameter is: " + parameter}</div>
                 <div className="my-2">
-                    {parameter !== undefined && parameter !== ""
-                        ? parameter
-                        : currentUrl}
+                    {attendee !== NO_USER
+                        ? "this id matches with: " + attendee
+                        : "this id does not match with anyone in the google sheets data"}
                 </div>
             </main>
         </div>
