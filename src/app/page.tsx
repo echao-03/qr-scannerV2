@@ -1,13 +1,11 @@
 "use client";
 import Image from "next/image";
-import { google } from "googleapis";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
     const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
     const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
     const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
-    const range = "Sheet1"; // Fetch the entire sheet data
     const [currentUrl, setCurrentUrl] = useState<string>("");
     const [parameter, setParameter] = useState<string>();
 
@@ -26,9 +24,14 @@ export default function Home() {
                 }
                 const data = await response.json();
                 setSheetData(data);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("An unknown error occurred");
+                }
+            }
+            finally {
                 setLoading(false);
             }
         };

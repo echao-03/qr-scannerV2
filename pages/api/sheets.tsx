@@ -4,8 +4,8 @@ import { google } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const sheetId = process.env.GOOGLE_SHEET_ID;
-    const apiKey = process.env.GOOGLE_API_KEY;
+    // const sheetId = process.env.GOOGLE_SHEET_ID;
+    // const apiKey = process.env.GOOGLE_API_KEY;
     try {
         const auth = new google.auth.GoogleAuth({
             keyFile: "./config/sheetsAPI.json", // Path to your JSON key
