@@ -8,7 +8,7 @@ export default function Home() {
     const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
     const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
     const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
-    const range = "Sheet1"; // Fetch the entire sheet data
+    //  const range = "Sheet1"; // Fetch the entire sheet data
     let attendee: string = NO_USER; // set attendee to a default NO_USER string
 
     const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url search paramter "id"
