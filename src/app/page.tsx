@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from 'react'
 const NO_USER: string = "XXXXXXXXXX";
 
 export default function Home() {
@@ -11,7 +12,7 @@ export default function Home() {
     //  const range = "Sheet1"; // Fetch the entire sheet data
     let attendee: string = NO_USER; // set attendee to a default NO_USER string
 
-    const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url search paramter "id"
+    const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
 
     useEffect(() => {
         // retrieving sheets and storing into data
@@ -61,42 +62,44 @@ export default function Home() {
                     priority
                 />
                 <h1>Google Sheets Data</h1>
-                {loading ? (
-                    <p>Loading...</p>
-                ) : error ? (
-                    <p>Error: {error}</p>
-                ) : sheetData ? (
-                    <table className="border-collapse border border-gray-300">
-                        <thead>
-                            <tr>
-                                {sheetData[0].map((header, index) => (
-                                    <th
-                                        key={index}
-                                        className="border border-gray-300 p-2"
-                                    >
-                                        {header}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sheetData.slice(1).map((row, rowIndex) => (
-                                <tr key={rowIndex}>
-                                    {row.map((cell, cellIndex) => (
-                                        <td
-                                            key={cellIndex}
+                <Suspense fallback={<p>Loading...</p>}>
+                    {loading ? (
+                        <p>Loading...</p>
+                    ) : error ? (
+                        <p>Error: {error}</p>
+                    ) : sheetData ? (
+                        <table className="border-collapse border border-gray-300">
+                            <thead>
+                                <tr>
+                                    {sheetData[0].map((header, index) => (
+                                        <th
+                                            key={index}
                                             className="border border-gray-300 p-2"
                                         >
-                                            {cell}
-                                        </td>
+                                            {header}
+                                        </th>
                                     ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    <p>No data found.</p>
-                )}
+                            </thead>
+                            <tbody>
+                                {sheetData.slice(1).map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                        {row.map((cell, cellIndex) => (
+                                            <td
+                                                key={cellIndex}
+                                                className="border border-gray-300 p-2"
+                                            >
+                                                {cell}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <p>No data found.</p>
+                    )}
+                </Suspense>
                 <div className="my-2">{"the parameter is: " + parameter}</div>
                 <div className="my-2">
                     {attendee !== NO_USER
