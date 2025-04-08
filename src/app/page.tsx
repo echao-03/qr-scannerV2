@@ -18,7 +18,6 @@ export default function Home() {
         // parse through ids in google sheets data to look for a corresponding id parameter
         if (sheetData !== null) {
             for (let i = 0; i < sheetData.length; i++) {
-                const parameter = useSearchParams()?.get("id");
                 if (parameter == sheetData[i][3]) {
                     attendee = sheetData[i][0];
                 }
