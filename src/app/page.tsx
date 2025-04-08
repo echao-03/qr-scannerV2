@@ -42,7 +42,9 @@ export default function Home() {
     }, []);
 
     // parse through ids in google sheets data to look for a corresponding id parameter
+
     if (sheetData !== null) {
+
         for (let i = 0; i < sheetData.length; i++) {
             if (parameter == sheetData[i][3]) {
                 attendee = sheetData[i][0];
@@ -99,13 +101,13 @@ export default function Home() {
                     ) : (
                         <p>No data found.</p>
                     )}
+                    <div className="my-2">{"the parameter is: " + parameter}</div>
+                    <div className="my-2">
+                        {attendee !== NO_USER
+                            ? "this id matches with: " + attendee
+                            : "this id does not match with anyone in the google sheets data"}
+                    </div>
                 </Suspense>
-                <div className="my-2">{"the parameter is: " + parameter}</div>
-                <div className="my-2">
-                    {attendee !== NO_USER
-                        ? "this id matches with: " + attendee
-                        : "this id does not match with anyone in the google sheets data"}
-                </div>
             </main>
         </div>
     );
