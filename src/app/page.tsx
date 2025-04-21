@@ -5,6 +5,16 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from 'react'
 const NO_USER: string = "XXXXXXXXXX";
 
+enum SHEET_INDEX {
+  ID = 0,
+  NAME = 1,
+  EMAIL_ADDRESS = 2,
+  PAYMENT_STATUS = 3,
+  EMAIL_STATUS = 4,
+  TICKET_TYPE = 5,
+  DIETARY_RESTRICTIONS = 6,
+}
+
 export default function Home() {
     const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
     const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
@@ -18,8 +28,8 @@ export default function Home() {
         // parse through ids in google sheets data to look for a corresponding id parameter
         if (sheetData !== null) {
             for (let i = 0; i < sheetData.length; i++) {
-                if (parameter == sheetData[i][3]) {
-                    attendee = sheetData[i][0];
+                if (parameter == sheetData[i][SHEET_INDEX.ID]) {
+                    attendee = sheetData[i][SHEET_INDEX.NAME];
                 }
             }
         }
