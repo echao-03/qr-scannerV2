@@ -1,11 +1,12 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server"; // App Router uses this instead
+import { OAuth2Client } from "google-auth-library";
 
 export async function GET() {
     try {
         const auth = new google.auth.GoogleAuth({
             keyFile: "./config/sheetsAPI.json", // Adjust if needed
-            scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
         });
 
         const sheets = google.sheets({ version: "v4", auth });
