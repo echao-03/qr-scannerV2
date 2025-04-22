@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"; // App Router uses this instead
 export async function GET() {
     try {
         const auth = new google.auth.GoogleAuth({
-            keyFile: "./config/sheetsAPI.json", // Adjust if needed
+            credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || '{}'),  // Adjust if needed
             scopes: ["https://www.googleapis.com/auth/spreadsheets"],
         });
 
