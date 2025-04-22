@@ -1,6 +1,5 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server"; // App Router uses this instead
-import { OAuth2Client } from "google-auth-library";
 
 export async function GET() {
     try {
