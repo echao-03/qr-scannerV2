@@ -25,28 +25,6 @@ export default function Home() {
     //  const range = "Sheet1"; // Fetch the entire sheet data
     let attendee: string = NO_USER; // set attendee to a default NO_USER string
 
-    const SearchParamsComponent = () => {
-        const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
-
-        // parse through ids in google sheets data to look for a corresponding id parameter
-        if (sheetData !== null) {
-            for (let i = 0; i < sheetData.length; i++) {
-                if (parameter == sheetData[i][SHEET_INDEX.ID]) {
-                    attendee = sheetData[i][SHEET_INDEX.NAME];
-                }
-            }
-        }
-        return (
-            <div>
-                {"The parameter is: " + parameter}
-                <div>
-                    {attendee !== NO_USER
-                        ? "This ID matches with: " + attendee
-                        : "This ID does not match with anyone on Google Sheets"}
-                </div>
-            </div>
-        );
-    };
 
 
     useEffect(() => {
@@ -76,7 +54,32 @@ export default function Home() {
         fetchData();
     }, []);
 
+    const SearchParamsComponent = () => {
+        const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
 
+        // parse through ids in google sheets data to look for a corresponding id parameter
+	
+        if (sheetData !== null) {
+            for (let i = 0; i < sheetData.length; i++) {
+		    
+                if (parameter == sheetData[i][SHEET_INDEX.ID]) {
+                    attendee = sheetData[i][SHEET_INDEX.NAME];
+                }
+            }
+        }
+
+	
+        return (
+            <div>
+                {"The parameter is: " + parameter}
+                <div>
+                    {attendee !== NO_USER
+                        ? "This ID matches with: " + attendee
+                        : "This ID does not match with anyone on Google Sheets"}
+                </div>
+            </div>
+        );
+     }; 
 
 
     return (
@@ -91,9 +94,8 @@ export default function Home() {
                     priority
                 />
                 <h1>Google Sheets Data</h1>
-                <Suspense fallback={<p>Loading...</p>}>
-                    <SearchParamsComponent />
-                </Suspense>
+        
+                <SearchParamsComponent />
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
@@ -130,11 +132,6 @@ export default function Home() {
                 ) : (
                     <p>No data found.</p>
                 )}
-                <div className="my-2">
-                    {attendee !== NO_USER
-                        ? "this id matches with: " + attendee
-                        : "this id does not match with anyone in the google sheets data"}
-                </div>
             </main>
         </div>
     );

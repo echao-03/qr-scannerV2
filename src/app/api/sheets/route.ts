@@ -29,9 +29,7 @@ export async function GET() {
         const filteredData: string[][] = [];
 
         for (const row of dataRows) {
-            if (row[2] && row[2]?.toLowerCase() === "true") {
-                filteredData.push(row);
-            }
+           filteredData.push(row) 
 
         }
 
