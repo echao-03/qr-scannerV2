@@ -4,7 +4,8 @@ import { NextResponse } from "next/server"; // App Router uses this instead
 export async function GET() {
     try {
         const auth = new google.auth.GoogleAuth({
-            credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || '{}'),  // Adjust if needed
+            // keyFile: "./config/sheetsAPI.json", // Works locally, use for "npm test dev"
+            credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || '{}'),  // Used for deployment, does NOT work locally
             scopes: ["https://www.googleapis.com/auth/spreadsheets"],
         });
 
@@ -25,9 +26,8 @@ export async function GET() {
         const filteredData: string[][] = [];
 
         for (const row of dataRows) {
-            if (row[2] && row[2]?.toLowerCase() === "true") {
-                filteredData.push(row);
-            }
+            filteredData.push(row);
+
         }
 
         return NextResponse.json([headers, ...filteredData]); // ✅ Sends JSON to client
