@@ -31,7 +31,7 @@ export async function GET() {
 
         }
 
-        return NextResponse.json([headers, ...filteredData]); // ✅ Sends JSON to client
+        return NextResponse.json([headers, ...filteredData]);
     } catch (error) {
         console.error("Error fetching sheet data: (Server Side)", error);
         return NextResponse.json(
