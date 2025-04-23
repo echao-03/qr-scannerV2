@@ -3,10 +3,14 @@ import { NextResponse } from "next/server"; // App Router uses this instead
 
 export async function GET() {
     try {
+	const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || "{}");
+	credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+
         const auth = new google.auth.GoogleAuth({
-            credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || '{}'),  // Used for deployment, does NOT work locally
+            credentials,  // Used for deployment, does NOT work locally
             scopes: ["https://www.googleapis.com/auth/spreadsheets"],
         });
+	
 
         const sheets = google.sheets({ version: "v4", auth });
         const spreadsheetId = process.env.GOOGLE_SHEET_ID;
