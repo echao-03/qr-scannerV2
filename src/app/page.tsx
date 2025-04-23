@@ -94,8 +94,9 @@ export default function Home() {
                     priority
                 />
                 <h1>Google Sheets Data</h1>
-        
+        	<Suspense fallback = {<p>Loading...</p>}>
                 <SearchParamsComponent />
+		</Suspense>
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
