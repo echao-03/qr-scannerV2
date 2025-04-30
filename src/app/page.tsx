@@ -59,12 +59,13 @@ export default function Home() {
 
   const SearchParamsComponent = () => {
     const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
-
     // parse through ids in google sheets data to look for a corresponding id parameter
+    if (parameter == null) {
+      attendee = "NULL"
+    } // Edge case to check if there is no ID
 
-    if (sheetData !== null) {
+    else if (sheetData !== null) {
       for (let i = 0; i < sheetData.length; i++) {
-
         if (parameter == sheetData[i][SHEET_INDEX.ID]) {
           attendee = sheetData[i][SHEET_INDEX.NAME];
           break;
@@ -78,16 +79,13 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className='rounded-lg'
+          className='text-3xl'
           transition={{ delay: 0.5 }}
 
-        >Welcome {attendee}!</motion.div>
+        >{attendee == "NULL" ? "Please scan QR for ID"
+          : attendee != NO_USER ? "Welcome " + attendee + "!"
+            : "Error: ID is not in database, please refer to Master Sheet"}</motion.div>
 
-        <div>
-          {attendee !== NO_USER
-            ? "This ID matches with: " + attendee
-            : "This ID does not match with anyone on Google Sheets"}
-        </div>
       </div>
     );
   };
@@ -104,11 +102,25 @@ export default function Home() {
           height={38}
           priority
         />
-        <h1>Google Sheets Data</h1>
+        <div>
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='text-5xl'
+            transition={{ delay: 0.5 }}
+          ><h1>Welcome to Matsuri!</h1></motion.div>
+
+        </div>
         <Suspense fallback={<p>Loading...</p>}>
           <SearchParamsComponent />
         </Suspense>
-
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <p>Data Loaded, No errors :)</p>
+        )}
       </main>
     </div>
   );
