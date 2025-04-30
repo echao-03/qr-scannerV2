@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from 'react'
+import { Suspense } from "react";
 const NO_USER: string = "XXXXXXXXXX";
 
 enum SHEET_INDEX {
@@ -15,8 +15,7 @@ enum SHEET_INDEX {
     DIETARY_RESTRICTIONS = 6,
 }
 
-export const dynamic = 'force-dynamic';
-
+export const dynamic = "force-dynamic";
 
 export default function Home() {
     const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
@@ -24,8 +23,6 @@ export default function Home() {
     const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
     //  const range = "Sheet1"; // Fetch the entire sheet data
     let attendee: string = NO_USER; // set attendee to a default NO_USER string
-
-
 
     useEffect(() => {
         // retrieving sheets and storing into data
@@ -45,8 +42,7 @@ export default function Home() {
                 } else {
                     setError("An unknown error occurred");
                 }
-            }
-            finally {
+            } finally {
                 setLoading(false);
             }
         };
@@ -55,20 +51,19 @@ export default function Home() {
     }, []);
 
     const SearchParamsComponent = () => {
-        const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
+        const parameter: string | null | undefined =
+            useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
 
         // parse through ids in google sheets data to look for a corresponding id parameter
-	
+
         if (sheetData !== null) {
             for (let i = 0; i < sheetData.length; i++) {
-		    
                 if (parameter == sheetData[i][SHEET_INDEX.ID]) {
                     attendee = sheetData[i][SHEET_INDEX.NAME];
                 }
             }
         }
 
-	
         return (
             <div>
                 {"The parameter is: " + parameter}
@@ -79,10 +74,31 @@ export default function Home() {
                 </div>
             </div>
         );
-     }; 
+    };
 
-
+    // return div starts here
     return (
+        <div className="grid-flow-row">
+            <main className="bg-[#F0E5C9] flex flex-col w-screen h-screen">
+                <Image
+                    className="absolute top-0 left-0 object-contain w-2/3 h-auto"
+                    src="/Layer 7.png"
+                    alt="red sun"
+                    width={0}
+                    height={0}
+                    sizes="50vw"
+                />
+                <Image
+                    className="absolute bottom-0 object-contain w-full h-auto"
+                    src="/pagoda landscape.png"
+                    alt="pagoda cropped"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                />
+            </main>
+        </div>
+        /*
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
                 <Image
@@ -134,6 +150,6 @@ export default function Home() {
                     <p>No data found.</p>
                 )}
             </main>
-        </div>
+        </div>*/
     );
 }
