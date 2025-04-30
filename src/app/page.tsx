@@ -2,9 +2,9 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+
 import { Suspense } from 'react'
 import { motion } from "motion/react";
-
 
 const NO_USER: string = "XXXXXXXXXX";
 
@@ -18,10 +18,10 @@ enum SHEET_INDEX {
   DIETARY_RESTRICTIONS = 6,
 }
 
-export const dynamic = 'force-dynamic';
-
+export const dynamic = "force-dynamic";
 
 export default function Home() {
+
   const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
   const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
   const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
@@ -57,12 +57,15 @@ export default function Home() {
     fetchData();
   }, []);
 
+      
+  // FULLY CHECKED SEARCHPARAMSCOMPONENT
   const SearchParamsComponent = () => {
     const parameter: string | null | undefined = useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
     // parse through ids in google sheets data to look for a corresponding id parameter
     if (parameter == null) {
       attendee = "NULL"
     } // Edge case to check if there is no ID
+
 
     else if (sheetData !== null) {
       for (let i = 0; i < sheetData.length; i++) {
@@ -72,8 +75,7 @@ export default function Home() {
         }
       }
     }
-
-
+    
     return (
       <div>
         <motion.div
@@ -89,18 +91,28 @@ export default function Home() {
       </div>
     );
   };
+      
+// END OF SEARCH PARAMS COMPONENT
 
-
+    // return div starts here
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div className="grid grid-rows-[20px_1fr_20px] grid-row-flow items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start bg-[#F0E5C9] w-screen h-screen">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+          className="absolute top-0 left-0 object-contain w-2/3 h-auto"
+          src="/Layer 7.png"
+          alt="red sun"
+          width={0}
+          height={0}
+          sizes="50vw"
+        />
+        <Image
+          className="absolute bottom-0 object-contain w-full h-auto"
+          src="/pagoda landscape.png"
+          alt="pagoda cropped"
+          width={0}
+          height={0}
+          sizes="100vw"
         />
         <div>
           <motion.div
