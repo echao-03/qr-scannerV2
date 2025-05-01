@@ -74,11 +74,11 @@ export default function Home() {
                 <motion.div
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-3xl"
+                    className="text-4xl text-center font-semibold"
                     transition={{ delay: 0.5 }}
                 >
                     {attendee == "NULL"
-                        ? "Please scan QR for ID"
+                        ? "Please scan QR Code."
                         : attendee != NO_USER
                         ? "Welcome " + attendee + "!"
                         : "Error: ID is not in database, please refer to Master Sheet"}
@@ -110,13 +110,13 @@ export default function Home() {
                     <motion.div
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl relative z-20 text-center top-[17vw]"
+                        className="text-6xl font-bold relative z-20 text-center top-[35vw]"
                         transition={{ delay: 1 }}
                     >
-                        <h1>Welcome to Matsuri!</h1>
+                        <h1>welcome</h1>
                     </motion.div>
                 </div>
-                <div className="relative z-20 top-[20vw]">
+                <div className="relative z-20 top-[30vw]">
                     <Suspense fallback={<p>Loading...</p>}>
                         <SearchParamsComponent />
                     </Suspense>
