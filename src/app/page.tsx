@@ -68,7 +68,6 @@ export default function Home() {
           attendee = sheetData[i][SHEET_INDEX.NAME];
           setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS]);
           setTicketType(sheetData[i][SHEET_INDEX.TICKET_TYPE]);
-          console.log(ticketType);
           break;
         }
       }
@@ -81,7 +80,7 @@ export default function Home() {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-5xl text-center max-w-screen-md w-64 text-center text-ellipsis break-words font-semibold"
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1 }}
         >
           {attendee == "NULL"
             ? "Please scan QR Code."
@@ -143,7 +142,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-bold w-64 p-4 text-base break-words"
-            transition={{ delay: 1.4 }}
+            transition={{ delay: 2.5 }}
           >
             Dietary Restrictions: {dietaryRestrictions}
           </motion.div>
