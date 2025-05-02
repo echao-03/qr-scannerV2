@@ -79,7 +79,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl text-center max-w-screen-md w-64 text-center text-ellipsis break-words font-semibold"
+          className="text-5xl text-center max-w-screen-md w-64 text-center text-ellipsis break-words "
           transition={{ delay: 1 }}
         >
           {attendee == "NULL"
@@ -101,14 +101,14 @@ export default function Home() {
     <div className="grid grid-row-flow text-black font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start bg-[#F0E5C9] w-screen h-screen">
         <motion.div
-          className="absolute aspect-square w-[100vw] rounded-full bg-[#e82b29] top-[-20vw] left-[-25vw]"
+          className="absolute aspect-square w-[70vw] rounded-full bg-[#e82b29] top-[-20vw] left-[-15vw]"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
         <motion.img
           className="absolute bottom-0 object-contain w-full h-auto"
-          src="/pagoda landscape.png"
+          src="/pagoda_landscape1.png"
           alt="pagoda cropped"
           initial={{ y: 500, opacity: 1 }}
           animate={{ y: 0, opacity: 1 }}
@@ -119,7 +119,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-6xl font-bold relative z-20 text-center top-[35vw]"
+            className="text-6xl font-semibold relative z-20 text-center top-[10vw]"
             transition={{ delay: 1 }}
           >
             <h1>
@@ -131,17 +131,17 @@ export default function Home() {
             </h1>
           </motion.div>
         </div>
-        <div className="relative z-20 top-[30vw]">
+        <div className="relative z-20 top-[10vw]">
           <Suspense fallback={<p>Loading...</p>}>
             <SearchParamsComponent />
           </Suspense>
         </div>
 
-        <div className="relative w-full h-screen top-40">
+        <div className="relative w-full h-screen top-10">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-bold w-64 p-4 text-base break-words"
+            className="text-4xl  w-64 p-4 text-base break-words"
             transition={{ delay: 2.5 }}
           >
             Dietary Restrictions: {dietaryRestrictions}
