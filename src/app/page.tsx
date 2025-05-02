@@ -101,7 +101,7 @@ export default function Home() {
     <div className="grid grid-row-flow text-black font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start bg-[#F0E5C9] w-screen h-screen">
         <motion.div
-          className="absolute aspect-square w-[70vw] rounded-full bg-[#e82b29] top-[-20vw] left-[-15vw]"
+          className="absolute aspect-square w-[80vw] rounded-full bg-[#e82b29] top-[-20vw] left-[-15vw]"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
