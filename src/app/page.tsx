@@ -66,7 +66,7 @@ export default function Home() {
       for (let i = 0; i < sheetData.length; i++) {
         if (parameter == sheetData[i][SHEET_INDEX.ID]) {
           attendee = sheetData[i][SHEET_INDEX.NAME];
-          setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS].toLowerCase());
+          setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS]);
           setTicketType(sheetData[i][SHEET_INDEX.TICKET_TYPE]);
           break;
         }
@@ -123,9 +123,9 @@ export default function Home() {
             transition={{ delay: 1 }}
           >
             <h1>
-              {ticketType == "volunteer/performer"
+              {ticketType == "Volunteer/Performer"
                 ? "thank you"
-                : ticketType == "alumni"
+                : ticketType == "Alumni"
                   ? "you're back?"
                   : "welcome"}
             </h1>
