@@ -66,7 +66,12 @@ export default function Home() {
       for (let i = 0; i < sheetData.length; i++) {
         if (parameter == sheetData[i][SHEET_INDEX.ID]) {
           attendee = sheetData[i][SHEET_INDEX.NAME];
-          setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS]);
+          if (!sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS])
+            setDietaryRestrictions("None")
+          else {
+
+            setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS]);
+          }
           setTicketType(sheetData[i][SHEET_INDEX.TICKET_TYPE]);
           break;
         }
