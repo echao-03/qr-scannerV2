@@ -79,7 +79,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl text-center max-w-screen-md w-64 text-center text-ellipsis break-words font-semibold"
+          className="text-5xl text-center max-w-screen-md w-75 text-center text-ellipsis break-words font-semibold"
           transition={{ delay: 1 }}
         >
           {attendee == "NULL"
