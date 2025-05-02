@@ -74,12 +74,25 @@ export default function Home() {
     }
 
     return (
-      <div>
-
+      <div className="absolute z-20 top-[10vw] text-center">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl text-center max-w-screen-md w-75 text-center text-ellipsis break-words font-semibold"
+          className="text-6xl font-semibold z-20"
+          transition={{ delay: 1 }}
+        >
+          <h1>
+            {ticketType == "Volunteer/Performer"
+              ? "thank you"
+              : ticketType == "Alumni"
+                ? "you're back?"
+                : "welcome"}
+          </h1>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-5 text-5xl text-center max-w-screen-md w-75 text-center text-ellipsis break-words font-semibold "
           transition={{ delay: 1 }}
         >
           {attendee == "NULL"
@@ -88,6 +101,7 @@ export default function Home() {
               ? attendee
               : "Error: ID is not in database, please refer to Master Sheet"}
         </motion.div>
+
 
 
 
@@ -115,46 +129,30 @@ export default function Home() {
           transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
           sizes="100vw"
         />
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-6xl font-semibold relative z-20 text-center top-[10vw]"
-            transition={{ delay: 1 }}
-          >
-            <h1>
-              {ticketType == "Volunteer/Performer"
-                ? "thank you"
-                : ticketType == "Alumni"
-                  ? "you're back?"
-                  : "welcome"}
-            </h1>
-          </motion.div>
-        </div>
-        <div className="relative z-20 top-[10vw]">
-          <Suspense fallback={<p>Loading...</p>}>
-            <SearchParamsComponent />
-          </Suspense>
-        </div>
 
-        <div className="relative w-full h-screen top-10">
+        <Suspense fallback={<p>Loading...</p>}>
+          <SearchParamsComponent />
+        </Suspense>
+
+
+        <div className="absolute top-[60vw] left-[3vw]">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-xl  w-64 p-4 text-base break-words"
+            className="text-xl top-40 w-64 p-4 text-base break-words"
             transition={{ delay: 2.5 }}
           >
             <h5>Dietary Restrictions: {dietaryRestrictions}</h5>
           </motion.div>
         </div>
 
-        {loading ? (
+        {loading ?
           <p>Loading...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : (
-          <p>Data Loaded, No errors</p>
-        )}
+          : error ?
+            <p>Error: {error}</p>
+            :
+            <p></p>
+        }
 
       </main>
 
