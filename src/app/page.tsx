@@ -17,15 +17,18 @@ enum SHEET_INDEX {
   DIETARY_RESTRICTIONS = 6,
 }
 
+
+
 export const dynamic = "force-dynamic";
 
 export default function Home() {
   const [sheetData, setSheetData] = useState<string[][] | null>(null); // Set data into a string
   const [loading, setLoading] = useState<boolean>(true); // Boolean to show if loading sheet data and/or receiving GET 200 from google API
   const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
-  //  const range = "Sheet1"; // Fetch the entire sheet data
   let attendee: string = NO_USER; // set attendee to a default NO_USER string
-
+  // let dietaryRestrictions: string = "None"
+  const [dietaryRestrictions, setDietaryRestrictions] = useState<string | null>("None");
+  const [ticketType, setTicketType] = useState<string | null>("General"); // Default if there's no input from ticket_type
   useEffect(() => {
     // retrieving sheets and storing into data
     const fetchData = async () => {
@@ -63,6 +66,9 @@ export default function Home() {
       for (let i = 0; i < sheetData.length; i++) {
         if (parameter == sheetData[i][SHEET_INDEX.ID]) {
           attendee = sheetData[i][SHEET_INDEX.NAME];
+          setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS]);
+          setTicketType(sheetData[i][SHEET_INDEX.TICKET_TYPE]);
+          console.log(ticketType);
           break;
         }
       }
@@ -70,19 +76,24 @@ export default function Home() {
 
     return (
       <div>
+
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl text-center font-semibold"
-          transition={{ delay: 0.5 }}
+          className="text-5xl text-center max-w-screen-md w-64 text-center text-ellipsis break-words font-semibold"
+          transition={{ delay: 1.2 }}
         >
           {attendee == "NULL"
             ? "Please scan QR Code."
             : attendee != NO_USER
-              ? "Welcome " + attendee + "!"
+              ? attendee
               : "Error: ID is not in database, please refer to Master Sheet"}
         </motion.div>
+
+
+
       </div>
+
     );
   };
 
@@ -112,7 +123,13 @@ export default function Home() {
             className="text-6xl font-bold relative z-20 text-center top-[35vw]"
             transition={{ delay: 1 }}
           >
-            <h1>welcome</h1>
+            <h1>
+              {ticketType == "volunteer/performer"
+                ? "thank you"
+                : ticketType == "alumni"
+                  ? "you're back?"
+                  : "welcome"}
+            </h1>
           </motion.div>
         </div>
         <div className="relative z-20 top-[30vw]">
@@ -120,6 +137,18 @@ export default function Home() {
             <SearchParamsComponent />
           </Suspense>
         </div>
+
+        <div className="relative w-full h-screen top-40">
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl font-bold w-64 p-4 text-base break-words"
+            transition={{ delay: 1.4 }}
+          >
+            Dietary Restrictions: {dietaryRestrictions}
+          </motion.div>
+        </div>
+
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
@@ -127,7 +156,9 @@ export default function Home() {
         ) : (
           <p>Data Loaded, No errors</p>
         )}
+
       </main>
+
     </div>
   );
 }
