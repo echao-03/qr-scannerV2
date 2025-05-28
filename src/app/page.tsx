@@ -32,9 +32,7 @@ export default function Home() {
             try {
                 const response = await fetch("/api/sheets"); // API route to fetch sheet data
                 if (!response.ok) {
-                    throw new Error(
-                        "Failed to fetch sheet data: (Client Side)"
-                    );
+                    throw new Error("");
                 }
                 const data = await response.json();
                 setSheetData(data);
@@ -51,7 +49,7 @@ export default function Home() {
 
         fetchData();
     }, []);
-
+    // Failed to fetch sheet data: (Client Side)
     const SearchParamsComponent = () => {
         const parameter: string | null | undefined =
             useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
@@ -76,7 +74,7 @@ export default function Home() {
                     className="text-6xl font-semibold z-20"
                     transition={{ delay: 1 }}
                 >
-                    <h1>welcome</h1>
+                    <h1>Welcome,</h1>
                 </motion.div>
                 <motion.div
                     initial={{ opacity: 0, y: -50 }}
@@ -121,6 +119,90 @@ export default function Home() {
                     ) : (
                         <p></p>
                     )}
+                    <div className="absolute bottom-0 w-full h-[50vh] flex">
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Effects Individual/Shadow.png"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 1.8 }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Envelope.png"
+                            initial={{
+                                x: "-100vw",
+                                y: "-100vh",
+                                scale: 0.5,
+                                opacity: 0,
+                            }}
+                            animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                            transition={{
+                                duration: 1,
+                                ease: "easeOut",
+                                delay: 0.5,
+                            }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Effects Individual/Trail 1.png"
+                            alt="Top Trail"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 1.8 }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Effects Individual/Trail 2.png"
+                            alt="Middle Trail"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 1.8 }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Effects Individual/Trail 3.png"
+                            alt="Bottom Trail"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 1.8 }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Mask_NoShadow.png"
+                            initial={{ opacity: 0, y: "10vw" }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                                duration: 1,
+                                delay: 0.5,
+                                ease: "easeOut",
+                            }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Effects Individual/Group Stars 1.png"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: 2,
+                            }}
+                        />
+                        <motion.img
+                            className="absolute bottom-0"
+                            src="/JSA Prom Assets/Effects Individual/Group Stars 2.png"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: 2.5,
+                            }}
+                        />
+                    </div>
                 </main>
             </div>
         </div>
