@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Suspense } from "react";
@@ -9,15 +9,12 @@ const NO_USER: string = "XXXXXXXXXX";
 
 enum SHEET_INDEX {
   ID = 0,
-  NAME = 1,
-  EMAIL_ADDRESS = 2,
-  PAYMENT_STATUS = 3,
-  EMAIL_STATUS = 4,
-  TICKET_TYPE = 5,
-  DIETARY_RESTRICTIONS = 6,
+  PAYMENT_STATUS = 1,
+  TICKET_STATUS = 2,
+  NAME = 3,
+  EMAIL_ADDRESS = 4,
+  DIETARY_RESTRICTIONS = 5,
 }
-
-
 
 export const dynamic = "force-dynamic";
 
@@ -27,17 +24,14 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null); // Set error into string to display (Not working)
   let attendee: string = NO_USER; // set attendee to a default NO_USER string
   // let dietaryRestrictions: string = "None"
-  const [dietaryRestrictions, setDietaryRestrictions] = useState<string | null>("None");
-  const [ticketType, setTicketType] = useState<string | null>("General"); // Default if there's no input from ticket_type
+  // const [ticketType, setTicketType] = useState<string | null>("General"); // Default if there's no input from ticket_type
   useEffect(() => {
     // retrieving sheets and storing into data
     const fetchData = async () => {
       try {
         const response = await fetch("/api/sheets"); // API route to fetch sheet data
         if (!response.ok) {
-          throw new Error(
-            "Failed to fetch sheet data: (Client Side)"
-          );
+          throw new Error("");
         }
         const data = await response.json();
         setSheetData(data);
@@ -54,7 +48,7 @@ export default function Home() {
 
     fetchData();
   }, []);
-
+  // Failed to fetch sheet data: (Client Side)
   const SearchParamsComponent = () => {
     const parameter: string | null | undefined =
       useSearchParams()?.get("id"); // takes id from url `search` paramter "id"
@@ -66,38 +60,25 @@ export default function Home() {
       for (let i = 0; i < sheetData.length; i++) {
         if (parameter == sheetData[i][SHEET_INDEX.ID]) {
           attendee = sheetData[i][SHEET_INDEX.NAME];
-          if (!sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS])
-            setDietaryRestrictions("None")
-          else {
-
-            setDietaryRestrictions(sheetData[i][SHEET_INDEX.DIETARY_RESTRICTIONS]);
-          }
-          setTicketType(sheetData[i][SHEET_INDEX.TICKET_TYPE]);
           break;
         }
       }
     }
 
     return (
-      <div className="absolute z-20 top-[10vw] text-center">
+      <div className="relative z-20 top-1/2 -translate-y-[125%] text-center">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-6xl font-semibold z-20"
           transition={{ delay: 1 }}
         >
-          <h1>
-            {ticketType == "Volunteer/Performer"
-              ? "thank you"
-              : ticketType == "Alumni"
-                ? "you're back?"
-                : "welcome"}
-          </h1>
+          <h1>Welcome,</h1>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-5 text-5xl text-center max-w-screen-md w-75 text-center text-ellipsis break-words font-semibold "
+          className="mt-5 text-5xl text-center max-w-screen-md w-75 text-ellipsis break-words font-semibold "
           transition={{ delay: 1 }}
         >
           {attendee == "NULL"
@@ -106,61 +87,123 @@ export default function Home() {
               ? attendee
               : "Error: ID is not in database, please refer to Master Sheet"}
         </motion.div>
-
-
-
-
       </div>
-
     );
   };
 
   // return div starts here
   return (
-    <div className="grid grid-row-flow text-black font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start bg-[#F0E5C9] w-screen h-screen">
+    <div className="grid grid-row-flow text-[#DB9F1C] font-[family-name:var(--font-geist-sans)] w-screen h-screen bg-[#1A1763]">
+      <div className="relative w-screen h-screen">
         <motion.div
-          className="absolute aspect-square w-[80vw] rounded-full bg-[#e82b29] top-[-20vw] left-[-15vw]"
-          initial={{ scale: 0 }}
+          className="absolute inset-y-4 inset-x-8 border-4 rounded-xl border-[#ecdab9]"
+          initial={{ scale: 1.2 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         />
-        <motion.img
-          className="absolute bottom-0 object-contain w-full h-auto"
-          src="/pagoda_landscape1.png"
-          alt="pagoda cropped"
-          initial={{ y: 500, opacity: 1 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-          sizes="100vw"
+        <motion.div
+          className="absolute inset-y-8 inset-x-4 border-4 rounded-xl border-[#f8dc97]"
+          initial={{ scale: 1.2 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         />
-
-        <Suspense fallback={<p>Loading...</p>}>
-          <SearchParamsComponent />
-        </Suspense>
-
-
-        <div className="absolute top-[60vw] left-[3vw]">
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xl top-40 w-64 p-4 text-base break-words"
-            transition={{ delay: 2.5 }}
-          >
-            <h5>Dietary Restrictions: {dietaryRestrictions}</h5>
-          </motion.div>
-        </div>
-
-        {loading ?
-          <p>Loading...</p>
-          : error ?
+        <main className="absolute flex flex-col inset-8">
+          <Suspense fallback={<p>Loading...</p>}>
+            <SearchParamsComponent />
+          </Suspense>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
             <p>Error: {error}</p>
-            :
+          ) : (
             <p></p>
-        }
-
-      </main>
-
+          )}
+          <div className="absolute bottom-0 w-full h-[50vh] flex">
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Effects Individual/Shadow.png"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.8 }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Envelope.png"
+              initial={{
+                x: "-100vw",
+                y: "-100vh",
+                scale: 0.5,
+                opacity: 0,
+              }}
+              animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+              transition={{
+                duration: 1,
+                ease: "easeOut",
+                delay: 0.5,
+              }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Effects Individual/Trail 1.png"
+              alt="Top Trail"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.8 }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Effects Individual/Trail 2.png"
+              alt="Middle Trail"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.8 }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Effects Individual/Trail 3.png"
+              alt="Bottom Trail"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.8 }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Mask_NoShadow.png"
+              initial={{ opacity: 0, y: "10vw" }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1,
+                delay: 0.5,
+                ease: "easeOut",
+              }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Effects Individual/Group Stars 1.png"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2,
+              }}
+            />
+            <motion.img
+              className="absolute bottom-0"
+              src="/JSA Prom Assets/Effects Individual/Group Stars 2.png"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.5,
+              }}
+            />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
