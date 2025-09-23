@@ -4,7 +4,7 @@ The QR-Scanner is a web application that utilizes Google Sheets API data as our 
 
 **Tech Stack**
 
-- React (JavaScript)
+- React (TypeScript)
 - Python
 - Google API
 
